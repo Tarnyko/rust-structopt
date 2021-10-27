@@ -1,0 +1,25 @@
+name: Rust Cargo build
+on: [push]
+jobs:
+  build:
+    name: Cargo build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 Job triggered by ${{ github.event_name }} event."
+      - run: echo "🐧 Job running on ${{ runner.os }}."
+      - run: echo "  Repository ${{ github.repository }}. Branch ${{ github.ref }}."
+      - run: |
+          ls ${{ github.workspace }}
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release
+      - uses: actions/upload-artifact@v2
+        with:
+          name: rust-structopt
+          path: target/release/rust-structopt
+      - run: echo "🍏 This job's status is ${{ job.status }}."
