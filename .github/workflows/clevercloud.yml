@@ -1,8 +1,9 @@
-name: Rust Cargo build
-on: [push]
+name: Rust CleverCloud Deploy
+on: [push, workflow_dispatch]
 jobs:
-  build:
-    name: Cargo build
+
+  deploy:
+    name: CleverCloud deploy
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 Job triggered by ${{ github.event_name }} event."
@@ -11,15 +12,12 @@ jobs:
       - run: |
           ls ${{ github.workspace }}
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - run: git fetch --prune --unshallow
+      - uses: Tarnyko/actions-clever-cloud@v1-force
         with:
-          toolchain: stable
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
-      - uses: actions/upload-artifact@v2
-        with:
-          name: rust-structopt
-          path: target/release/rust-structopt
+          timeout: 300
+          appID: app_9e6ed579-9e56-42c5-81e6-3bf8ac5ee049
+        env:
+          CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
+          CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
