@@ -3,7 +3,7 @@ use std::net::TcpListener;
 use std::io::Write;    // for TcpStream.flush()
 
 #[derive(Debug, StructOpt)]
-#[structopt(name = "example", about = "An example of StructOpt usage.")]
+#[structopt(name = "arguments", about = "Command-line arguments.")]
 struct Opt {
     version: i16,
 }
