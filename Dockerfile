@@ -12,4 +12,4 @@ WORKDIR /code
 RUN cargo build --release
 
 EXPOSE 8080
-CMD ["/code/target/release/rust-structopt", "1"]
+CMD ["/code/target/release/rust-structopt", "counter.txt"]
